@@ -1,9 +1,8 @@
 import { AbstractAPIRequest } from "./AbstractAPIRequest.js";
-import type { StatsType } from "../enum/StatsType.js";
+import  { StatsType } from "../enum/StatsType.js";
 import type { AbstractStatisticsEntry } from "../model/AbstractStatisticsEntry.js";
 
 export class StatsAPIRequest extends AbstractAPIRequest {
-    API_URL = "https://bsm.baseball-softball.de"
     protected readonly bsmPersonID: number = 76222
     protected readonly defaultSeason = new Date().getFullYear()
 

@@ -1,4 +1,6 @@
-export interface AbstractStatisticsEntry {
+import {BSMDataObject} from "./BSMDataObject.js";
+
+export interface AbstractStatisticsEntry extends BSMDataObject {
     data: any;
     summaries: any;
 }
