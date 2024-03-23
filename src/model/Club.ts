@@ -1,4 +1,6 @@
-export interface Club {
+import {BSMDataObject} from "./BSMDataObject.js";
+
+export interface Club extends BSMDataObject {
     id: number;
     type: string;
     name: string;

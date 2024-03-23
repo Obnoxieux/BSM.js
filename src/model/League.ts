@@ -1,4 +1,6 @@
-export interface League {
+import {BSMDataObject} from "./BSMDataObject.js";
+
+export interface League extends BSMDataObject {
     id: number;
     type: string;
     name: string;
