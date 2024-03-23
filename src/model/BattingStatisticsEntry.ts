@@ -1,5 +1,6 @@
-import type { AbstractStatisticsEntry } from "./AbstractStatisticsEntry.js";
-import type { Club } from "./Club.js";
+import type {AbstractStatisticsEntry} from "./AbstractStatisticsEntry.js";
+import type {Club} from "./Club.js";
+import {League} from "./League.js";
 
 export interface BattingStatisticsEntry extends AbstractStatisticsEntry {
     data: BattingStatisticsData[]
@@ -12,16 +13,7 @@ interface BattingStatsSummary {
 
 interface BattingStatisticsData {
     club: Club;
-    league: {
-        id: number;
-        type: string;
-        name: string;
-        acronym: string;
-        sport: string;
-        sort: number;
-        season: number;
-        age_group: string;
-    };
+    league: League
     type: string;
     values: BattingStatisticValues;
 }

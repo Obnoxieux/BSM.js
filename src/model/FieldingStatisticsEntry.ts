@@ -1,5 +1,6 @@
 import type { Club } from "./Club.js";
 import type { AbstractStatisticsEntry } from "./AbstractStatisticsEntry.js";
+import {League} from "./League.js";
 
 export interface FieldingStatisticsEntry extends AbstractStatisticsEntry {
     data: FieldingStatisticsData[];
@@ -33,16 +34,7 @@ interface FieldingStatisticValues {
 
 interface FieldingStatisticsData {
     club: Club;
-    league: {
-        id: number;
-        type: string;
-        name: string;
-        acronym: string;
-        sport: string;
-        sort: number;
-        season: number;
-        age_group: string;
-    };
+    league: League
     type: string;
     values: FieldingStatisticValues;
 }
