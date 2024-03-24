@@ -25,15 +25,19 @@ export abstract class AbstractAPIRequest {
      * @protected
      */
     protected async apiCall<T>(resource: string, queryParameters: string[][], method: string = "GET"): Promise<T | undefined> {
-        queryParameters.push(["api_key", this.apiKey])
-
-        const params = new URLSearchParams(queryParameters).toString()
-        const url = new URL(`${this.API_URL}/${resource}?` + params)
+        const url = this.buildRequestURL(queryParameters, resource);
         const init: RequestInit = {
             method: method,
         }
         const request = new Request(url, init)
         const response = await fetch(request)
         return response.json()
+    }
+
+    private buildRequestURL(queryParameters: string[][], resource: string) {
+        queryParameters.push(["api_key", this.apiKey])
+
+        const params = new URLSearchParams(queryParameters).toString()
+        return new URL(`${this.API_URL}/${resource}?` + params);
     }
 }
