@@ -3,9 +3,14 @@ import {BSMDataObject} from "../model/BSMDataObject.js";
 export abstract class AbstractAPIRequest {
     protected readonly API_URL: string = "https://bsm.baseball-softball.de"
 
-    constructor(protected apiKey: string) {}
+    constructor(protected readonly apiKey: string) {}
 
-    // reads URL and returns the full response as JSON
+    /**
+     * @deprecated use generic method instead
+     * @param url
+     * @param options
+     * @protected
+     */
     protected async fetchJSONData(url: string, options: RequestInit | undefined): Promise<BSMDataObject> {
         const response = await fetch(url, options)
         return await response.json()
@@ -34,7 +39,7 @@ export abstract class AbstractAPIRequest {
         return response.json()
     }
 
-    private buildRequestURL(queryParameters: string[][], resource: string) {
+    protected buildRequestURL(queryParameters: string[][], resource: string) {
         queryParameters.push(["api_key", this.apiKey])
 
         const params = new URLSearchParams(queryParameters).toString()
