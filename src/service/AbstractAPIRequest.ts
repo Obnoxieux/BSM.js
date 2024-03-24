@@ -23,10 +23,10 @@ export abstract class AbstractAPIRequest {
     readonly TEAM_SEARCH = "search"
 
     /**
-     * Generic API fetch method for all BSM resources
-     * @param resource
-     * @param queryParameters
-     * @param method
+     * Generic API fetch method for all resources
+     * @param resource the API endpoint
+     * @param queryParameters all GET parameters that should be appended to the URL
+     * @param method HTTP method to call the endpoint with. BSM only supports GET at the moment.
      * @protected
      */
     protected async apiCall<T>(resource: string, queryParameters: string[][], method: string = "GET"): Promise<T | undefined> {
@@ -39,6 +39,13 @@ export abstract class AbstractAPIRequest {
         return response.json()
     }
 
+    /**
+     * Helper method to build the API call URL from the given parameters and endpoint.
+     *
+     * @param queryParameters
+     * @param resource
+     * @protected
+     */
     protected buildRequestURL(queryParameters: string[][], resource: string) {
         queryParameters.push(["api_key", this.apiKey])
 

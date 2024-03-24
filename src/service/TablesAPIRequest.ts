@@ -6,10 +6,10 @@ export class TablesAPIRequest extends AbstractAPIRequest {
      * Get a single table for a given LeagueGroup
      *
      * Scope: Organization/Club
-     * @param leagueGroupID
+     *
+     * @param leagueGroupID the ID for the leagueGroup
      */
-    async getSingleTable(leagueGroupID: number): Promise<Table> {
-        const response = await this.apiCall<Table>(`leagues/${leagueGroupID}/table.json`, [])
-        return response as Table
+    public async getSingleTable(leagueGroupID: number): Promise<Table | undefined> {
+        return await this.apiCall<Table>(`leagues/${leagueGroupID}/table.json`, [])
     }
 }
