@@ -1,8 +1,8 @@
 import {TablesAPIRequest} from "../service/TablesAPIRequest.js";
-import {Table} from "../model/Table.js";
+import 'dotenv/config'
 
 describe("Tables API Request", () => {
-    const request = new TablesAPIRequest("KEY")
+    const request = new TablesAPIRequest(process.env.TEST_API_KEY!)
 
     test("Single Table", async () => {
         const leagueGroupID = 5661
