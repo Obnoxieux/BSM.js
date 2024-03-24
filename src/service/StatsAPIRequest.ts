@@ -3,18 +3,22 @@ import  { StatsType } from "../enum/StatsType.js";
 import type { AbstractStatisticsEntry } from "../model/AbstractStatisticsEntry.js";
 
 export class StatsAPIRequest extends AbstractAPIRequest {
-    protected readonly bsmPersonID: number = 76222
-    protected readonly defaultSeason = new Date().getFullYear()
-
-    protected buildURL(statsType: StatsType, season?: number): string {
-        const selectedSeason = season ?? this.defaultSeason
-
-        return `${this.API_URL}/people/${this.bsmPersonID}/statistics/${statsType}.json?filters[seasons][]=${selectedSeason}`
-    }
-
-    async loadPersonalStatistics(statsType: StatsType, season?: number): Promise<AbstractStatisticsEntry> {
-        const url = this.buildURL(statsType, season)
-        const response = await this.fetchJSONData(url, undefined)
+    /**
+     * Gets stats for a single Person.
+     *
+     * Scope: Club, Organization
+     * Auth: None
+     *
+     * @param personID the player ID to get stats for
+     * @param statsType which kind of statistics to fetch (batting, pitching, fielding)
+     * @param season the season to query
+     */
+    public async getStatisticsForPerson(personID: number, statsType: StatsType, season: number): Promise<AbstractStatisticsEntry> {
+        const resource = `people/${personID}/statistics/${statsType}.json`
+        const queryParameters = [
+            [this.SEASON_FILTER, season.toString()]
+        ]
+        const response = await this.apiCall(resource, queryParameters)
 
         return response as AbstractStatisticsEntry
     }

@@ -1,26 +1,13 @@
-import {BSMDataObject} from "../model/BSMDataObject.js";
-
 export abstract class AbstractAPIRequest {
     protected readonly API_URL: string = "https://bsm.baseball-softball.de"
 
     constructor(protected readonly apiKey: string) {}
 
-    /**
-     * @deprecated use generic method instead
-     * @param url
-     * @param options
-     * @protected
-     */
-    protected async fetchJSONData(url: string, options: RequestInit | undefined): Promise<BSMDataObject> {
-        const response = await fetch(url, options)
-        return await response.json()
-    }
-
-    readonly SEASON_FILTER = "filters[seasons][]"
-    readonly GAMEDAY_FILTER = "filters[gamedays][]"
-    readonly LEAGUE_FILTER = "filters[leagues][]"
-    readonly ORGANIZATION_FILTER = "filters[organizations][]"
-    readonly TEAM_SEARCH = "search"
+    public readonly SEASON_FILTER = "filters[seasons][]"
+    public readonly GAMEDAY_FILTER = "filters[gamedays][]"
+    public readonly LEAGUE_FILTER = "filters[leagues][]"
+    public readonly ORGANIZATION_FILTER = "filters[organizations][]"
+    public readonly TEAM_SEARCH = "search"
 
     /**
      * Generic API fetch method for all resources
