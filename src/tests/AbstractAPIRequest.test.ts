@@ -2,7 +2,7 @@ import {AbstractAPIRequest} from "../service/AbstractAPIRequest.js";
 
 describe("Basic API", () => {
     class DummyAPIRequest extends AbstractAPIRequest {
-        public buildRequestURL(queryParameters: string[][], resource: string): URL {
+        public override buildRequestURL(queryParameters: string[][], resource: string): URL {
             return super.buildRequestURL(queryParameters, resource)
         }
     }
