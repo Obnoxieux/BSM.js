@@ -13,5 +13,6 @@ describe("Stats API Request", () => {
         const result = await request.getStatisticsForPerson(personID, statsType, season)
         expect(result).toHaveProperty("data")
         expect(result).toHaveProperty("summaries")
+        expect(result).toBeTruthy()
     })
 })
