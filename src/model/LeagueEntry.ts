@@ -1,4 +1,5 @@
 import {Field} from "./Field.js";
+import {Team} from "./Team.js";
 
 export interface LeagueEntry {
     id:                                       number;
@@ -16,4 +17,5 @@ export interface LeagueEntry {
     human_game_day?:                          string;
     human_license_criteria_state?:            string;
     field?:                                   Field;
+    team?:                                    Team;
 }
