@@ -25,7 +25,25 @@ export abstract class AbstractAPIRequest {
         }
         const request = new Request(url, init)
         const response = await fetch(request)
-        return response.json()
+        return this.parseJSON(response)
+    }
+
+    /**
+     * Type-decorated way to parse a response object as JSON. Returns the generic input type as object on success,
+     * undefined on failure.
+     *
+     * @param response
+     */
+    protected async parseJSON<T>(response: Response): Promise<T | undefined> {
+        let json: T | undefined
+
+        try {
+            json = await response.json()
+            return json as T
+        } catch {
+            json = undefined
+            return json
+        }
     }
 
     /**
@@ -33,7 +51,6 @@ export abstract class AbstractAPIRequest {
      *
      * @param queryParameters
      * @param resource
-     * @protected
      */
     protected buildRequestURL(queryParameters: string[][], resource: string) {
         queryParameters.push(["api_key", this.apiKey])

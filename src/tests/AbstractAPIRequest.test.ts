@@ -1,9 +1,14 @@
 import {AbstractAPIRequest} from "../service/AbstractAPIRequest.js";
+import {Match} from "../model/Match.js";
 
 describe("Basic API", () => {
     class DummyAPIRequest extends AbstractAPIRequest {
         public override buildRequestURL(queryParameters: string[][], resource: string): URL {
             return super.buildRequestURL(queryParameters, resource)
+        }
+
+        public override parseJSON<T>(response: Response): Promise<T | undefined> {
+            return super.parseJSON<T>(response)
         }
     }
 
@@ -18,5 +23,14 @@ describe("Basic API", () => {
 
         expect(request.buildRequestURL(dummyParams, dummyResource).toString())
             .toBe("https://bsm.baseball-softball.de/stuff.json?q=baz&foo=bar&api_key=BOGUS")
+    })
+
+    test("JSON parsing of website that is not valid JSON", async () => {
+        const request = new DummyAPIRequest("BOGUS")
+        const response = await fetch("https://example.com/")
+
+        const json = await request.parseJSON<Match>(response)
+
+        expect(json).toBe(undefined)
     })
 })

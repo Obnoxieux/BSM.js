@@ -35,7 +35,6 @@ describe("Match API Request", () => {
         expect(result).toHaveProperty("full_boxscore_html")
     })
 
-    // TODO: this test will always fail right now because the function never completes due to HTML being sent back
     test("Boxscore for single Match - does not exist", async () => {
         const matchID = 0
         const result = await request.getBoxscoreForGame(matchID)
