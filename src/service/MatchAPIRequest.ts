@@ -12,7 +12,7 @@ export class MatchAPIRequest extends AbstractAPIRequest {
      * @param gamedays
      * @return Promise<Match[]>
      */
-    public async loadGamesForClub(clubID: number, season?: number, gamedays?: string): Promise<Match[]> {
+    public async loadGamesForClub(clubID: number, season?: number, gamedays?: Gameday): Promise<Match[]> {
         const queryParameters: string[][] = [
             [this.SEASON_FILTER, season?.toString() ?? this.defaultSeason.toString()],
             [this.GAMEDAY_FILTER, gamedays ?? Gameday.current]
