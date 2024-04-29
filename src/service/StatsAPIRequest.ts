@@ -11,13 +11,19 @@ export class StatsAPIRequest extends AbstractAPIRequest {
      *
      * @param personID the player ID to get stats for
      * @param statsType which kind of statistics to fetch (batting, pitching, fielding)
-     * @param season the season to query
+     * @param season the season to query (leave empty for all seasons)
      */
-    public async getStatisticsForPerson(personID: number, statsType: StatsType, season: number): Promise<AbstractStatisticsEntry> {
+    public async getStatisticsForPerson(personID: number, statsType: StatsType, season?: number): Promise<AbstractStatisticsEntry> {
         const resource = `people/${personID}/statistics/${statsType}.json`
-        const queryParameters = [
-            [this.SEASON_FILTER, season.toString()]
-        ]
+
+        let queryParameters: string[][] = []
+
+        if (season) {
+            queryParameters = [
+                [this.SEASON_FILTER, season.toString()]
+            ]
+        }
+
         const response = await this.apiCall(resource, queryParameters)
 
         return response as AbstractStatisticsEntry

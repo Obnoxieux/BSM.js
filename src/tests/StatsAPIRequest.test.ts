@@ -15,4 +15,14 @@ describe("Stats API Request", () => {
         expect(result).toHaveProperty("summaries")
         expect(result).toBeTruthy()
     })
+
+    test("Single Player - Pitching - no query parameters", async () => {
+        const personID = 76222
+        const statsType = StatsType.pitching
+
+        const result = await request.getStatisticsForPerson(personID, statsType)
+        expect(result).toHaveProperty("data")
+        expect(result).toHaveProperty("summaries")
+        expect(result).toBeTruthy()
+    })
 })
