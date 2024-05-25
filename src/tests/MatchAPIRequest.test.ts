@@ -39,6 +39,6 @@ describe("Match API Request", () => {
         const matchID = 0
         const result = await request.getBoxscoreForGame(matchID)
 
-        expect(result).toBe(undefined)
+        expect(result).toBe(null)
     })
 })

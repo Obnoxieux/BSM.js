@@ -20,7 +20,7 @@ export abstract class AbstractAPIRequest {
      * - data fetching
      * - response parsing
      *
-     * BSM supports only GET at the moment, but other HTTP methods might be possible
+     * BSM supports only GET at the moment; other HTTP methods might be possible
      * later, but should get their own method.
      *
      * @param resource the API endpoint
@@ -40,8 +40,8 @@ export abstract class AbstractAPIRequest {
 
         try {
             return this.parseJSON<T>(response)
-        } catch {
-            throw new ParseError("The Response could not be parsed to valid object of the requested type.")
+        } catch(error: any) {
+            throw new ParseError(`The Response could not be parsed to valid object of the requested type: ${error.message}`)
         }
     }
 

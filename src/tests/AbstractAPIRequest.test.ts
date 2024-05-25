@@ -25,12 +25,16 @@ describe("Basic API", () => {
             .toBe("https://bsm.baseball-softball.de/stuff.json?q=baz&foo=bar&api_key=BOGUS")
     })
 
-    test("JSON parsing of website that is not valid JSON", async () => {
-        const request = new DummyAPIRequest("BOGUS")
-        const response = await fetch("https://example.com/")
 
-        const json = await request.parseJSON<Match>(response)
+    it('should throw Error - JSON parsing of website that is not valid JSON', async () => {
+        async function shouldThrow() {
+            const request = new DummyAPIRequest("BOGUS")
+            const response = await fetch("https://example.com/")
+            const json = await request.parseJSON<Match>(response)
+        }
 
-        expect(json).toBe(undefined)
-    })
+        await expect(shouldThrow())
+            .rejects
+            .toThrow()
+    });
 })
