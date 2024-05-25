@@ -30,7 +30,7 @@ describe("Basic API", () => {
         async function shouldThrow() {
             const request = new DummyAPIRequest("BOGUS")
             const response = await fetch("https://example.com/")
-            const json = await request.parseJSON<Match>(response)
+            await request.parseJSON<Match>(response)
         }
 
         await expect(shouldThrow())
