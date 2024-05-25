@@ -8,11 +8,18 @@ import {ParseError} from "../error/ParseError.js";
 export class MatchAPIRequest extends AbstractAPIRequest {
 
     /**
-     * Gets games pre-filtered by a specific club ID.
-     * @param clubID
-     * @param season
-     * @param gamedays
+     * Gets games pre-filtered by a specific club ID. This shows strictly club games by default,
+     * compared to the generic `matches.json` endpoint.
+     *
+     * Scope: Club
+     * Auth: Key
+     *
+     * @param clubID the club ID to get games for
+     * @param season the season to filter
+     * @param gamedays the game day to filter for (current, next, previous or any) - represented by enum
      * @return Promise<Match[]>
+     * @throws ParseError
+     * @throws FetchError
      */
     public async loadGamesForClub(clubID: number, season?: number, gamedays?: Gameday): Promise<Match[]> {
         const queryParameters: string[][] = [
@@ -30,6 +37,9 @@ export class MatchAPIRequest extends AbstractAPIRequest {
      * - return a Promise with the boxscore data
      * - return null if the game could be found, but does not have a boxscore
      * - throws an error if there is a response, but parsing fails
+     *
+     * Scope: Club, Organization
+     * Auth: Key
      *
      * @param id the BSM match ID to query for a boxscore
      * @return Promise<MatchBoxscore>

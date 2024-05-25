@@ -49,23 +49,23 @@ export abstract class AbstractAPIRequest {
      * Type-decorated wrapper method to parse a response object as JSON. Returns the generic input type as object on success,
      * and throws a custom error on failure.
      *
-     * @param response
+     * @param response the response for a fetch request
      * @throws ParseError
      */
     protected async parseJSON<T>(response: Response): Promise<T> {
         try {
             const json = await response.json()
             return json as T
-        } catch {
-            throw new ParseError("The Response could not be parsed to valid object of the requested type.")
+        } catch(error: any) {
+            throw new ParseError(`The Response could not be parsed to valid object of the requested type: ${error.message}`)
         }
     }
 
     /**
      * Helper method to build the API call URL from the given parameters and endpoint.
      *
-     * @param queryParameters
-     * @param resource
+     * @param resource the BSM API endpoint to call
+     * @param queryParameters all GET parameters that should be appended to the URL
      */
     protected buildRequestURL(resource: string, queryParameters: string[][]): URL {
         queryParameters.push(["api_key", this.apiKey])

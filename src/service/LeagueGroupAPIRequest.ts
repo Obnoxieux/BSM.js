@@ -7,7 +7,10 @@ export class LeagueGroupAPIRequest extends AbstractAPIRequest{
      * for which league groups are loaded.
      *
      * Scope: Club
-     * @param season
+     *
+     * @param season the season to load LeagueGroups for
+     * @throws ParseError
+     * @throws FetchError
      */
     async getLeagueGroupsForClub(season: number): Promise<LeagueGroup[]> {
         const response = await this.apiCallGET<LeagueGroup[]>("league_groups.json",[
