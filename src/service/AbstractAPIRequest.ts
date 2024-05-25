@@ -1,3 +1,6 @@
+import {ParseError} from "../error/ParseError.js";
+import {FetchError} from "../error/FetchError.js";
+
 export abstract class AbstractAPIRequest {
     protected readonly API_URL: string = "https://bsm.baseball-softball.de"
 
@@ -12,37 +15,49 @@ export abstract class AbstractAPIRequest {
     protected readonly defaultSeason = new Date().getFullYear()
 
     /**
-     * Generic API fetch method for all resources
+     * Generic API fetch method for all resources that combines the three parts of a BSM API call:
+     * - URL building from query parameters
+     * - data fetching
+     * - response parsing
+     *
+     * BSM supports only GET at the moment, but other HTTP methods might be possible
+     * later, but should get their own method.
+     *
      * @param resource the API endpoint
      * @param queryParameters all GET parameters that should be appended to the URL
-     * @param method HTTP method to call the endpoint with. BSM only supports GET at the moment.
+     * @throws ParseError
+     * @throws FetchError
      * @protected
      */
-    protected async apiCall<T>(resource: string, queryParameters: string[][], method: string = "GET"): Promise<T | undefined> {
-        const url = this.buildRequestURL(queryParameters, resource);
-        const init: RequestInit = {
-            method: method,
+    protected async apiCallGET<T>(resource: string, queryParameters: string[][]): Promise<T> {
+        const url = this.buildRequestURL(resource, queryParameters);
+
+        const response = await fetch(url)
+
+        if (!response.ok) {
+            throw new FetchError(`An error has occurred: ${response.status}`);
         }
-        const request = new Request(url, init)
-        const response = await fetch(request)
-        return this.parseJSON(response)
+
+        try {
+            return this.parseJSON<T>(response)
+        } catch {
+            throw new ParseError("The Response could not be parsed to valid object of the requested type.")
+        }
     }
 
     /**
-     * Type-decorated way to parse a response object as JSON. Returns the generic input type as object on success,
-     * undefined on failure.
+     * Type-decorated wrapper method to parse a response object as JSON. Returns the generic input type as object on success,
+     * and throws a custom error on failure.
      *
      * @param response
+     * @throws ParseError
      */
-    protected async parseJSON<T>(response: Response): Promise<T | undefined> {
-        let json: T | undefined
-
+    protected async parseJSON<T>(response: Response): Promise<T> {
         try {
-            json = await response.json()
+            const json = await response.json()
             return json as T
         } catch {
-            json = undefined
-            return json
+            throw new ParseError("The Response could not be parsed to valid object of the requested type.")
         }
     }
 
@@ -52,7 +67,7 @@ export abstract class AbstractAPIRequest {
      * @param queryParameters
      * @param resource
      */
-    protected buildRequestURL(queryParameters: string[][], resource: string) {
+    protected buildRequestURL(resource: string, queryParameters: string[][]): URL {
         queryParameters.push(["api_key", this.apiKey])
 
         const params = new URLSearchParams(queryParameters).toString()

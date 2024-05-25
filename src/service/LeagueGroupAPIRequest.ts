@@ -10,7 +10,7 @@ export class LeagueGroupAPIRequest extends AbstractAPIRequest{
      * @param season
      */
     async getLeagueGroupsForClub(season: number): Promise<LeagueGroup[]> {
-        const response = await this.apiCall<LeagueGroup[]>("league_groups.json",[
+        const response = await this.apiCallGET<LeagueGroup[]>("league_groups.json",[
             [this.SEASON_FILTER, season.toString()]
         ])
         return response as LeagueGroup[]

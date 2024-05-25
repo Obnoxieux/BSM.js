@@ -24,7 +24,7 @@ export class StatsAPIRequest extends AbstractAPIRequest {
             ]
         }
 
-        const response = await this.apiCall(resource, queryParameters)
+        const response = await this.apiCallGET(resource, queryParameters)
 
         return response as AbstractStatisticsEntry
     }

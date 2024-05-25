@@ -17,7 +17,7 @@ export class MatchAPIRequest extends AbstractAPIRequest {
             [this.SEASON_FILTER, season?.toString() ?? this.defaultSeason.toString()],
             [this.GAMEDAY_FILTER, gamedays ?? Gameday.current]
         ]
-        const response = await this.apiCall<Match[]>(
+        const response = await this.apiCallGET<Match[]>(
             `clubs/${clubID}/matches.json`, queryParameters
         )
         return response as Match[]
@@ -29,7 +29,7 @@ export class MatchAPIRequest extends AbstractAPIRequest {
      * @return Promise<MatchBoxscore>
      */
     public async getBoxscoreForGame(id: number): Promise<MatchBoxscore | undefined> {
-        const response = await this.apiCall<MatchBoxscore>(
+        const response = await this.apiCallGET<MatchBoxscore>(
             `matches/${id}/match_boxscore.json`, []
         )
         return response
