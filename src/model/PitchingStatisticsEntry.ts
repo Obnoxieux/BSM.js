@@ -7,7 +7,7 @@ export interface PitchingStatisticsEntry extends AbstractStatisticsEntry {
     summaries: PitchingStatisticSummary[];
 }
 
-interface PitchingStatisticValues {
+export interface PitchingStatisticValues {
     type: string;
     games: number;
     games_started: number;
@@ -35,14 +35,14 @@ interface PitchingStatisticValues {
     walks_and_hits_per_innings_pitched: string;
 }
 
-interface PitchingStatisticsData {
+export interface PitchingStatisticsData {
     club: Club;
     league: League
     type: string;
     values: PitchingStatisticValues;
 }
 
-interface PitchingStatisticSummary {
+export interface PitchingStatisticSummary {
     values: PitchingStatisticValues;
 }
 

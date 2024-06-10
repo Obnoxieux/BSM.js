@@ -4,10 +4,10 @@ export interface Table extends BSMDataObject {
     league_id: number;
     league_name: string;
     season: number;
-    rows: Row[];
+    rows: TableRow[];
 }
 
-interface Row {
+export interface TableRow {
     rank: string;
     team_name: string;
     short_team_name: string;

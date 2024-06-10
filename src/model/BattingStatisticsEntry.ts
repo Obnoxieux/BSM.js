@@ -7,18 +7,18 @@ export interface BattingStatisticsEntry extends AbstractStatisticsEntry {
     summaries: BattingStatsSummary[]
 }
 
-interface BattingStatsSummary {
+export interface BattingStatsSummary {
     values: BattingStatisticValues
 }
 
-interface BattingStatisticsData {
+export interface BattingStatisticsData {
     club: Club;
     league: League
     type: string;
     values: BattingStatisticValues;
 }
 
-interface BattingStatisticValues {
+export interface BattingStatisticValues {
     type: string;
     games: number;
     games_started: number;

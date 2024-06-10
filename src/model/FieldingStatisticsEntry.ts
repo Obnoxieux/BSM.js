@@ -7,7 +7,7 @@ export interface FieldingStatisticsEntry extends AbstractStatisticsEntry {
     summaries: FieldingStatisticSummary[];
 }
 
-interface FieldingStatisticValues {
+export interface FieldingStatisticValues {
     type: string;
     games: number;
     games_started: number;
@@ -32,13 +32,13 @@ interface FieldingStatisticValues {
     right_fielder: number;
 }
 
-interface FieldingStatisticsData {
+export interface FieldingStatisticsData {
     club: Club;
     league: League
     type: string;
     values: FieldingStatisticValues;
 }
 
-interface FieldingStatisticSummary {
+export interface FieldingStatisticSummary {
     values: FieldingStatisticValues;
 }
