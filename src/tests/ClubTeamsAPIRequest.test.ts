@@ -1,7 +1,8 @@
-import {ClubTeamsAPIRequest} from "../service/TeamsAPIRequest.js";
+import {ClubTeamsAPIRequest} from "../service/ClubTeamsAPIRequest.js";
 import 'dotenv/config'
+import {FetchError} from "../error/FetchError.js";
 
-describe("Teams API Request", () => {
+describe("Club Teams API Request", () => {
     const request = new ClubTeamsAPIRequest(process.env.TEST_API_KEY!)
     
     test("Teams for Club - exists", async () => {
@@ -25,10 +26,11 @@ describe("Teams API Request", () => {
     })
     
     test("Teams for Club - does not exist", async () => {
-        const clubID = 0
+        async function shouldThrow() {
+            const clubID = 0
+            await request.getTeamsForClub(clubID);
+        }
         
-        const result = await request.getTeamsForClub(clubID)
-        
-        expect(result).toBeFalsy()
+        await expect(shouldThrow()).rejects.toThrow(FetchError)
     })
 })
