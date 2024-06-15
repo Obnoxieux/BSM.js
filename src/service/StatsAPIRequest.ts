@@ -1,6 +1,8 @@
 import { AbstractAPIRequest } from "./AbstractAPIRequest.js";
 import  { StatsType } from "../enum/StatsType.js";
-import type { AbstractStatisticsEntry } from "../model/AbstractStatisticsEntry.js";
+import {BattingStatisticsEntry} from "../model/BattingStatisticsEntry.js";
+import {PitchingStatisticsEntry} from "../model/PitchingStatisticsEntry.js";
+import {FieldingStatisticsEntry} from "../model/FieldingStatisticsEntry.js";
 
 export class StatsAPIRequest extends AbstractAPIRequest {
     /**
@@ -15,7 +17,7 @@ export class StatsAPIRequest extends AbstractAPIRequest {
      * @throws ParseError
      * @throws FetchError
      */
-    public async getStatisticsForPerson(personID: number, statsType: StatsType, season?: number): Promise<AbstractStatisticsEntry> {
+    public async getStatisticsForPerson<T extends BattingStatisticsEntry | PitchingStatisticsEntry | FieldingStatisticsEntry>(personID: number, statsType: StatsType, season?: number): Promise<T> {
         const resource = `people/${personID}/statistics/${statsType}.json`
 
         let queryParameters: string[][] = []
@@ -26,8 +28,53 @@ export class StatsAPIRequest extends AbstractAPIRequest {
             ]
         }
 
-        const response = await this.apiCallGET(resource, queryParameters)
+        const response = await this.apiCallGET<T>(resource, queryParameters)
 
-        return response as AbstractStatisticsEntry
+        return response
+    }
+
+    /**
+     * Gets stats for a single league entry (corresponds to a single team).
+     *
+     * Scope: Club, Organization
+     * Auth: None
+     *
+     * @param entryID
+     * @param statsType
+     */
+    public async getStatisticsForLeagueEntry<T extends BattingStatisticsEntry | PitchingStatisticsEntry | FieldingStatisticsEntry>(entryID: number, statsType: StatsType): Promise<T> {
+        const resource = `league_entries/${entryID}/statistics/${statsType}.json`
+
+        let queryParameters: string[][] = []
+
+        const response = await this.apiCallGET<T>(resource, queryParameters)
+
+        return response
+    }
+
+    /**
+     * Gets stats for a whole club (all teams and leagues).
+     *
+     * Scope: Club, Organization
+     * Auth: None
+     *
+     * @param clubID
+     * @param statsType
+     * @param season
+     */
+    public async getStatisticsForClub<T extends BattingStatisticsEntry | PitchingStatisticsEntry | FieldingStatisticsEntry>(clubID: number, statsType: StatsType, season?: number): Promise<T> {
+        const resource = `clubs/${clubID}/statistics/${statsType}.json`
+
+        let queryParameters: string[][] = []
+
+        if (season) {
+            queryParameters = [
+                [this.SEASON_FILTER, season.toString()]
+            ]
+        }
+
+        const response = await this.apiCallGET<T>(resource, queryParameters)
+
+        return response
     }
 }
