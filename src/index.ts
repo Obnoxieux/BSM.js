@@ -5,7 +5,6 @@ export {TablesAPIRequest} from "./service/TablesAPIRequest.js";
 export {LeagueGroupAPIRequest} from "./service/LeagueGroupAPIRequest.js";
 export {Gameday} from "./enum/Gameday.js";
 export {StatsType} from "./enum/StatsType.js";
-export {AbstractStatisticsEntry} from "./model/AbstractStatisticsEntry.js";
 export {BattingStatisticsEntry} from "./model/BattingStatisticsEntry.js";
 export {BSMDataObject} from "./model/BSMDataObject.js";
 export {Club} from "./model/Club.js";

@@ -1,10 +1,8 @@
-import type { Club } from "./Club.js";
-import type { AbstractStatisticsEntry } from "./AbstractStatisticsEntry.js";
-import {League} from "./League.js";
+import type {StatisticsData, StatisticsSummary} from "./AbstractStatisticsEntry.js";
 
-export interface FieldingStatisticsEntry extends AbstractStatisticsEntry {
-    data: FieldingStatisticsData[];
-    summaries: FieldingStatisticSummary[];
+export interface FieldingStatisticsEntry {
+    data: StatisticsData<"FieldingStatistics">[];
+    summaries: StatisticsSummary<"FieldingStatistics">[];
 }
 
 export interface FieldingStatisticValues {
@@ -30,15 +28,4 @@ export interface FieldingStatisticValues {
     left_fielder: number;
     center_fielder: number;
     right_fielder: number;
-}
-
-export interface FieldingStatisticsData {
-    club: Club;
-    league: League
-    type: string;
-    values: FieldingStatisticValues;
-}
-
-export interface FieldingStatisticSummary {
-    values: FieldingStatisticValues;
 }

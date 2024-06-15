@@ -1,10 +1,8 @@
-import type { Club } from "./Club.js";
-import type { AbstractStatisticsEntry } from "./AbstractStatisticsEntry.js";
-import {League} from "./League.js";
+import type {StatisticsData, StatisticsSummary} from "./AbstractStatisticsEntry.js";
 
-export interface PitchingStatisticsEntry extends AbstractStatisticsEntry {
-    data: PitchingStatisticsData[];
-    summaries: PitchingStatisticSummary[];
+export interface PitchingStatisticsEntry {
+    data: StatisticsData<"PitchingStatistics">[];
+    summaries: StatisticsSummary<"PitchingStatistics">[];
 }
 
 export interface PitchingStatisticValues {
@@ -34,15 +32,3 @@ export interface PitchingStatisticValues {
     earned_runs_average: string;
     walks_and_hits_per_innings_pitched: string;
 }
-
-export interface PitchingStatisticsData {
-    club: Club;
-    league: League
-    type: string;
-    values: PitchingStatisticValues;
-}
-
-export interface PitchingStatisticSummary {
-    values: PitchingStatisticValues;
-}
-
