@@ -4,6 +4,7 @@ import {BattingStatisticValues} from "./BattingStatisticsEntry.js";
 import {PitchingStatisticValues} from "./PitchingStatisticsEntry.js";
 import {FieldingStatisticValues} from "./FieldingStatisticsEntry.js";
 import {Person} from "./Person.js";
+import {GameClassEntry} from "./GameClassEntry.js";
 
 export interface StatisticsData<T extends keyof StatisticsValueTypes> {
     person?: Person,
@@ -22,3 +23,9 @@ export type StatisticsValueTypes = {
     PitchingStatistics: PitchingStatisticValues,
     FieldingStatistics: FieldingStatisticValues,
 };
+
+export interface AbstractStatisticsEntry {
+    person?: Person,
+    game_class_entry?: GameClassEntry,
+    club?: Club,
+}

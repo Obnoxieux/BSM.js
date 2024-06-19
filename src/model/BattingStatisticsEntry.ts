@@ -1,12 +1,12 @@
-import type {StatisticsData, StatisticsSummary} from "./AbstractStatisticsEntry.js";
+import type {AbstractStatisticsEntry, StatisticsData, StatisticsSummary} from "./AbstractStatisticsEntry.js";
 
-export interface BattingStatisticsEntry {
+export interface BattingStatisticsEntry extends AbstractStatisticsEntry {
     data: StatisticsData<"BattingStatistics">[]
     summaries: StatisticsSummary<"BattingStatistics">[]
 }
 
 export interface BattingStatisticValues {
-    type: "BattingStatisticsValues";
+    type: string
     games: number;
     games_started: number;
     plate_appearances: number;
