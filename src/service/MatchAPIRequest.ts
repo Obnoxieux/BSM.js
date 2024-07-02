@@ -8,6 +8,21 @@ import {ParseError} from "../error/ParseError.js";
 export class MatchAPIRequest extends AbstractAPIRequest {
 
     /**
+     * Gets a single game.
+     *
+     * Scope: Club, Organization
+     * Auth: Key
+     *
+     * @param id the internal BSM id of the match (_not_ the JSON entry "match_id" which is the human-readable ID
+     * on scoresheets)
+     * @throws ParseError
+     * @throws FetchError
+     */
+    public async loadSingleMatch(id: number): Promise<Match> {
+        return await this.apiCallGET<Match>(`matches/${id}.json`, [])
+    }
+
+    /**
      * Gets games pre-filtered by a specific club ID. This shows strictly club games by default,
      * compared to the generic `matches.json` endpoint.
      *
