@@ -48,6 +48,42 @@ export class MatchAPIRequest extends AbstractAPIRequest {
     }
 
     /**
+     * Gets games in general, will include games for all teams the API key has access to if no search parameter is passed
+     * (which can be a lot for an organizational key!).
+     *
+     * Scope: Club, Organization
+     * Auth: Key
+     *
+     * @param season the season to filter for
+     * @param gamedays enum: the gameday to filter - _current_, _previous_, _next_, _any_ are valid options
+     * @param leagueGroup the ID of the LeagueGroup to filter for
+     * @param search generic string that is passed directly to the API call (text search)
+     * @throws ParseError
+     * @throws FetchError
+     */
+    public async loadAllGames(
+        season?: number,
+        gamedays?: Gameday,
+        leagueGroup?: number,
+        search?: string
+    ): Promise<Match[]> {
+        let queryParameters: string[][] = [
+            [this.SEASON_FILTER, season?.toString() ?? this.defaultSeason.toString()],
+            [this.GAMEDAY_FILTER, gamedays ?? Gameday.current]
+        ]
+
+        if (leagueGroup) {
+            queryParameters.push([this.LEAGUE_FILTER, leagueGroup.toString()])
+        }
+
+        if (search) {
+            queryParameters.push([this.TEAM_SEARCH, search])
+        }
+
+        return await this.apiCallGET<Match[]>("matches.json", queryParameters)
+    }
+
+    /**
      * Get the boxscore for a single game specified by parameter. The function does one of three things:
      * - return a Promise with the boxscore data
      * - return null if the game could be found, but does not have a boxscore
