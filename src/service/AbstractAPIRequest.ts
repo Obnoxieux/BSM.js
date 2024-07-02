@@ -30,12 +30,10 @@ export abstract class AbstractAPIRequest {
      * @protected
      */
     protected async apiCallGET<T>(resource: string, queryParameters: string[][]): Promise<T> {
-        const url = this.buildRequestURL(resource, queryParameters);
-
-        const response = await fetch(url)
+        const response = await this.apiCall(resource, queryParameters)
 
         if (!response.ok) {
-            throw new FetchError(`An error has occurred: ${response.status}`);
+            throw new FetchError(`An error has occurred: ${response.status}`)
         }
 
         try {
@@ -43,6 +41,19 @@ export abstract class AbstractAPIRequest {
         } catch(error: any) {
             throw new ParseError(`The Response could not be parsed to valid object of the requested type: ${error.message}`)
         }
+    }
+
+    /**
+     * Option to call the BSM API without automatic response parsing, in case callers want to do that themselves.
+     *
+     * @param resource the API endpoint
+     * @param queryParameters all GET parameters that should be appended to the URL
+     * @protected
+     */
+    protected async apiCall(resource: string, queryParameters: string[][]) {
+        const url = this.buildRequestURL(resource, queryParameters)
+
+        return await fetch(url)
     }
 
     /**
