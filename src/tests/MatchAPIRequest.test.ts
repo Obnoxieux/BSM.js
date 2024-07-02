@@ -63,4 +63,32 @@ describe("Match API Request", () => {
 
         await expect(shouldThrow()).rejects.toThrow(FetchError)
     })
+
+    test("load all games - with query params", async () => {
+        const season = 2024
+        const gameday = Gameday.previous
+        const search = "skylarks"
+
+        const result = await request.loadAllGames(season, gameday, undefined, search)
+
+        expect(Array.isArray(result)).toBe(true)
+        expect(result.length).toBeGreaterThan(0)
+        expect(result[0]).toHaveProperty("away_team_name")
+        expect(result[0]).toHaveProperty("home_team_name")
+        expect(result[0]).toHaveProperty("league")
+    })
+
+    test("load games - single leagueGroup with no search", async () => {
+        const season = 2024
+        const gameday = Gameday.any
+        const leagueGroupID = 5695 // Tossballliga BSVBB, has 12 games
+
+        const result = await request.loadAllGames(season, gameday, leagueGroupID)
+
+        expect(Array.isArray(result)).toBe(true)
+        expect(result).toHaveLength(12)
+        expect(result[0]).toHaveProperty("away_team_name")
+        expect(result[0]).toHaveProperty("home_team_name")
+        expect(result[0]).toHaveProperty("league")
+    })
 })
