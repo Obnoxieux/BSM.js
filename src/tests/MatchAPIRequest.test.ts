@@ -1,6 +1,7 @@
 import {MatchAPIRequest} from "../service/MatchAPIRequest.js";
 import {Gameday} from "../enum/Gameday.js";
 import 'dotenv/config'
+import {FetchError} from "../error/FetchError.js";
 
 describe("Match API Request", () => {
     const request = new MatchAPIRequest(process.env.TEST_API_KEY!)
@@ -40,5 +41,26 @@ describe("Match API Request", () => {
         const result = await request.getBoxscoreForGame(matchID)
 
         expect(result).toBe(null)
+    })
+
+    test("single match - exists", async () => {
+        const id = 51211
+        const result = await request.loadSingleMatch(id)
+
+        expect(result).toBeTruthy()
+        expect(result).toHaveProperty("away_team_name")
+        expect(result).toHaveProperty("home_team_name")
+        expect(result).toHaveProperty("league")
+        expect(result).toHaveProperty("home_runs")
+        expect(result).toHaveProperty("away_runs")
+    })
+
+    test("single match - does not exist", async () => {
+        async function shouldThrow() {
+            const id = 0
+            await request.loadSingleMatch(id)
+        }
+
+        await expect(shouldThrow()).rejects.toThrow(FetchError)
     })
 })
