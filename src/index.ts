@@ -3,6 +3,7 @@ export {MatchAPIRequest} from "./service/MatchAPIRequest.js";
 export {StatsAPIRequest} from "./service/StatsAPIRequest.js";
 export {TablesAPIRequest} from "./service/TablesAPIRequest.js";
 export {LeagueGroupAPIRequest} from "./service/LeagueGroupAPIRequest.js";
+export {ClubTeamsAPIRequest} from "./service/ClubTeamsAPIRequest.js";
 export {Gameday} from "./enum/Gameday.js";
 export {StatsType} from "./enum/StatsType.js";
 export {BattingStatisticsEntry} from "./model/BattingStatisticsEntry.js";
