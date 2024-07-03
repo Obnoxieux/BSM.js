@@ -31,7 +31,7 @@ else
 fi
 
 echo "Performing dry run of publish..."
-if npm run publish --dry-run; then
+if npm publish --dry-run; then
     echo "Dry run publish successful, please review the output."
 else
     echo "Dry run publish failed. Exiting..."
@@ -40,7 +40,7 @@ fi
 
 if confirm "Do you want to proceed with the actual publish? [y/N]"; then
     echo "Publishing..."
-    if npm run publish; then
+    if npm publish; then
         echo "Publish successful!"
     else
         echo "Publish failed."
