@@ -24,6 +24,27 @@ describe("Club Teams API Request", () => {
             expect(result[0]?.team).toHaveProperty("short_name")
         }
     })
+
+    test("Teams for Club - with query param for past season", async () => {
+        const clubID = 485
+        const season = 2022
+
+        const result = await request.getTeamsForClub(clubID, season)
+
+        expect(Array.isArray(result)).toBe(true)
+        expect(result).toBeTruthy()
+        expect(result?.length).toBeGreaterThan(0)
+
+        if (result) {
+            expect(result[0]).toHaveProperty("id")
+            expect(result[0]).toHaveProperty("number")
+            expect(result[0]).toHaveProperty("team")
+            expect(result[0]?.team).toHaveProperty("name")
+            expect(result[0]?.team).toHaveProperty("id")
+            expect(result[0]?.team).toHaveProperty("season")
+            expect(result[0]?.team).toHaveProperty("short_name")
+        }
+    })
     
     test("Teams for Club - does not exist", async () => {
         async function shouldThrow() {
