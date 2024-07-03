@@ -12,7 +12,7 @@ export abstract class AbstractAPIRequest {
     public readonly ORGANIZATION_FILTER = "filters[organizations][]"
     public readonly TEAM_SEARCH = "search"
 
-    protected readonly defaultSeason = new Date().getFullYear()
+    public readonly defaultSeason = new Date().getFullYear()
 
     /**
      * Generic API fetch method for all resources that combines the three parts of a BSM API call:
