@@ -32,4 +32,15 @@ describe('LeagueGroupsAPIRequest', () => {
         expect(Array.isArray(result)).toBe(true)
         expect(result.length).toBe(0)
     })
+
+    test("single leagueGroup - valid", async () => {
+        const id = 5695
+
+        const result = await request.getSingleLeagueGroup(id)
+
+        expect(result).toHaveProperty("league")
+        expect(result).toHaveProperty("id")
+        expect(result).toHaveProperty("name")
+        expect(result).toHaveProperty("acronym")
+    })
 });
