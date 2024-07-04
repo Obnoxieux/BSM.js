@@ -1,8 +1,8 @@
 {
   "name": "bsm.js",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Client library for the API of the German Baseball & Softball Federation (DBV)",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "type": "module",
   "repository": {
     "type": "git",
@@ -37,7 +37,8 @@
     "dist/**/*",
     "!/dist/tests/*"
   ],
-  "module": "dist/index.js",
+  "module": "./dist/index.js",
+  "exports": "./dist/index.js",
   "types": "dist/",
   "dependencies": {
     "dotenv": "^16.4.5"
