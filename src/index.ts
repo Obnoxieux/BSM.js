@@ -27,3 +27,4 @@ export {Table} from "./model/Table.js";
 export {Team} from "./model/Team.js";
 export {GameClassEntry} from "./model/GameClassEntry.js";
 export * from "./model/AbstractStatisticsEntry.js";
+export * from "./model/ClubTeam.js";
