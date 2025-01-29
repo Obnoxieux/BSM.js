@@ -15,7 +15,7 @@ confirm() {
 }
 
 echo "Running tests..."
-if npm run test; then
+if pnpm run test; then
     echo "Tests passed!"
 else
     echo "Tests failed. Exiting..."
@@ -23,7 +23,7 @@ else
 fi
 
 echo "Building project..."
-if npm run build; then
+if pnpm run build; then
     echo "Build successful!"
 else
     echo "Build failed. Exiting..."
@@ -31,7 +31,7 @@ else
 fi
 
 echo "Performing dry run of publish..."
-if npm publish --dry-run; then
+if pnpm publish --dry-run; then
     echo "Dry run publish successful, please review the output."
 else
     echo "Dry run publish failed. Exiting..."
@@ -40,7 +40,7 @@ fi
 
 if confirm "Do you want to proceed with the actual publish? [y/N]"; then
     echo "Publishing..."
-    if npm publish; then
+    if pnpm publish; then
         echo "Publish successful!"
     else
         echo "Publish failed."
