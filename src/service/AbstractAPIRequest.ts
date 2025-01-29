@@ -50,7 +50,7 @@ export abstract class AbstractAPIRequest {
      * @param queryParameters all GET parameters that should be appended to the URL
      * @protected
      */
-    protected async apiCall(resource: string, queryParameters: string[][]) {
+    public async apiCall(resource: string, queryParameters: string[][]) {
         const url = this.buildRequestURL(resource, queryParameters)
 
         return await fetch(url)
