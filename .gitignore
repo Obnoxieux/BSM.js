@@ -48,3 +48,4 @@ Temporary Items
 .nfs*
 
 .run
+/http/http-client.private.env.json

@@ -1,0 +1,3 @@
+### GET Club details
+GET https://bsm.baseball-softball.de/clubs/{{clubID}}.json?api_key={{apiKey}}
+###
