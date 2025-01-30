@@ -1,5 +1,6 @@
 import {ParseError} from "../error/ParseError.js";
 import {FetchError} from "../error/FetchError.js";
+import {LicenseFilter} from "../model/LicenseFilter.js";
 
 export abstract class AbstractAPIRequest {
     protected readonly API_URL: string = "https://bsm.baseball-softball.de"
@@ -83,5 +84,15 @@ export abstract class AbstractAPIRequest {
 
         const params = new URLSearchParams(queryParameters).toString()
         return new URL(`${this.API_URL}/${resource}?` + params);
+    }
+
+    /**
+     * Helper method to convert more strictly typed filter objects into generic string array
+     * to use for URLSearchParams constructor.
+     *
+     * @param filter
+     */
+    protected convertToSearchParams(filter: LicenseFilter): string[][] {
+        return Object.entries(filter).map(([key, value]) => [key, value]);
     }
 }
