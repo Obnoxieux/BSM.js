@@ -30,3 +30,4 @@ export * from "./model/AbstractStatisticsEntry.js";
 export * from "./model/ClubTeam.js";
 export * from "./service/ClubAPIRequest.js"
 export * from "./model/LicenseFilter.js"
+export * from './model/ClubFunction.js'
