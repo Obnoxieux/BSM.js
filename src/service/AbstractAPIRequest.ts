@@ -79,7 +79,7 @@ export abstract class AbstractAPIRequest {
      * @param resource the BSM API endpoint to call
      * @param queryParameters all GET parameters that should be appended to the URL
      */
-    protected buildRequestURL(resource: string, queryParameters: string[][]): URL {
+    public buildRequestURL(resource: string, queryParameters: string[][]): URL {
         queryParameters.push(["api_key", this.apiKey])
 
         const params = new URLSearchParams(queryParameters).toString()
@@ -92,7 +92,7 @@ export abstract class AbstractAPIRequest {
      *
      * @param filter
      */
-    protected convertToSearchParams(filter: LicenseFilter): string[][] {
+    public convertToSearchParams(filter: LicenseFilter): string[][] {
         return Object.entries(filter).map(([key, value]) => [key, value]);
     }
 }
