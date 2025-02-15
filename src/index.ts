@@ -31,3 +31,6 @@ export * from "./model/ClubTeam.js";
 export * from "./service/ClubAPIRequest.js"
 export * from "./model/LicenseFilter.js"
 export * from './model/ClubFunction.js'
+export * from './service/MatchDecorator.js'
+export {GameWinner} from "./enum/GameWinner.js";
+export {MatchState} from "./enum/MatchState.js";
