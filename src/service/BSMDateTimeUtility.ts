@@ -1,37 +1,33 @@
 export class BSMDateTimeUtility {
   /**
    * Slightly overcomplicated method to parse the BSM "time" string into something usable.
-   * BSM does not use ISO 8601 format.
+   * BSM does not use ISO 8601 format, and Safari does not support BSM format with `Date.parse()`.
+   *
+   * Replace with Temporal when available.
    *
    * Format example: 2024-04-07 12:05:00 +0200
    */
-  public static parseDateFromBSMString(formattedString: string): Date|null {
-    const dateParts = formattedString.split(/[- :]/);
+  public static parseDateFromBSMString(formattedString: string): Date | null {
+    const match = formattedString.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) ([+-]\d{4})/);
 
-    if (dateParts.length !== 7) {
-      return null
+    if (!match) {
+      return null;
     }
 
-    // Extracting date parts
-    const year = parseInt(dateParts[0] ?? "", 10);
-    const month = parseInt(dateParts[1] ?? "", 10) - 1; // Month is zero-based
-    const day = parseInt(dateParts[2] ?? "", 10);
-    const hour = parseInt(dateParts[3] ?? "", 10);
-    const minute = parseInt(dateParts[4] ?? "", 10);
-    const second = parseInt(dateParts[5] ?? "", 10);
+    const [, year, month, day, hour, minute, second, timezone] = match;
+    const date = new Date(Date.UTC(
+        parseInt(year ?? "", 10),
+        parseInt(month ?? "", 10) - 1, // Month is zero-based
+        parseInt(day ?? "", 10),
+        parseInt(hour ?? "", 10),
+        parseInt(minute ?? "", 10),
+        parseInt(second ?? "", 10)
+    ));
 
-    // Extracting time zone offset
-    const timezoneOffsetHours = parseInt(<string>dateParts[6]?.substring(0, 3), 10);
-    const timezoneOffsetMinutes = parseInt(<string>dateParts[6]?.substring(3), 10);
+    const timezoneOffsetHours = parseInt(<string>timezone?.substring(0, 3), 10);
+    const timezoneOffsetMinutes = parseInt(<string>timezone?.substring(3), 10);
     const timezoneOffset = (timezoneOffsetHours * 60) + timezoneOffsetMinutes;
 
-    // Creating date object
-    const date = new Date(year, month, day, hour, minute, second);
-
-    // Adjusting for time zone offset
-    const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
-    const adjustedTime = utcTime + (timezoneOffset * 60000);
-
-    return new Date(adjustedTime);
+    return new Date(date.getTime() - timezoneOffset * 60000);
   }
 }

@@ -1,6 +1,6 @@
 import {BSMDateTimeUtility} from "../service/BSMDateTimeUtility.js";
 
-describe("parseDateFromBSMString", () => {
+describe("BSMDateTimeUtility.parseDateFromBSMString", () => {
   test("should parse a valid BSM formatted string correctly", () => {
     const date = BSMDateTimeUtility.parseDateFromBSMString("2024-02-15 14:30:45 +0530");
     expect(date).toBeInstanceOf(Date);
@@ -10,6 +10,20 @@ describe("parseDateFromBSMString", () => {
     expect(date?.getUTCHours()).toBe(9); // Adjusted for timezone offset
     expect(date?.getUTCMinutes()).toBe(0);
     expect(date?.getUTCSeconds()).toBe(45);
+  });
+
+  test("should parse a valid BSM formatted string correctly", () => {
+    const times = [
+      "2025-04-13 12:00:00 +0200",
+      "2025-04-13 15:30:00 +0200",
+      "2025-04-27 12:00:00 +0200",
+      "2025-04-27 15:30:00 +0200"
+    ];
+
+    times.forEach(time => {
+      const date = BSMDateTimeUtility.parseDateFromBSMString(time);
+      expect(date).toBeInstanceOf(Date);
+    });
   });
 
   test("should return null for an incorrectly formatted string", () => {
@@ -31,6 +45,6 @@ describe("parseDateFromBSMString", () => {
   });
 
   test("should return null if non-numeric values are present", () => {
-    expect(BSMDateTimeUtility.parseDateFromBSMString("abcd-ef-gh ij:kl:mn+opqr")).toBeNull();
+    expect(BSMDateTimeUtility.parseDateFromBSMString("abcd-ef-gh ij:kl:mn +opqr")).toBeNull();
   });
 });
