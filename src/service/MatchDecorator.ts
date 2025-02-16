@@ -1,6 +1,6 @@
-import type {Match} from "bsm.js";
 import {GameWinner} from "../enum/GameWinner.js";
 import {MatchState} from "../enum/MatchState.js";
+import type {Match} from "../model/Match.js";
 
 /**
  * This class exists so that you can have methods on the BSM interface `Match` which is a POJO when deserialized from JSON.
