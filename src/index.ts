@@ -34,3 +34,4 @@ export * from './model/ClubFunction.js'
 export * from './service/MatchDecorator.js'
 export {GameWinner} from "./enum/GameWinner.js";
 export {MatchState} from "./enum/MatchState.js";
+export * from "./service/BSMDateTimeUtility.js"
