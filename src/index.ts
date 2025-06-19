@@ -24,6 +24,7 @@ export {AdditionalMatchStats, AdditionalStat, OffensiveMatchStats, PitchingMatch
 export {Person, ContactInfo} from "./model/Person.js";
 export {PitchingStatisticsEntry} from "./model/PitchingStatisticsEntry.js";
 export {Table} from "./model/Table.js";
+export {TableRow} from "./model/Table.js";
 export {Team} from "./model/Team.js";
 export {GameClassEntry} from "./model/GameClassEntry.js";
 export * from "./model/AbstractStatisticsEntry.js";
