@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import {StatsAPIRequest} from "../service/StatsAPIRequest.js";
 import {StatsType} from "../enum/StatsType.js";
 import {BattingStatisticsEntry} from "../model/BattingStatisticsEntry.js";

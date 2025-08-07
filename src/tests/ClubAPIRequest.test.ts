@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import {ClubAPIRequest} from "../service/ClubAPIRequest.js";
 import * as process from "node:process";
 import {LicenseFilter} from "../model/LicenseFilter.js";

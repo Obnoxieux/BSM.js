@@ -1,5 +1,4 @@
 import {TablesAPIRequest} from "../service/TablesAPIRequest.js";
-import 'dotenv/config'
 
 describe("Tables API Request", () => {
     const request = new TablesAPIRequest(process.env.TEST_API_KEY!)

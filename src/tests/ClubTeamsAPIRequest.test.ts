@@ -1,5 +1,4 @@
 import {ClubTeamsAPIRequest} from "../service/ClubTeamsAPIRequest.js";
-import 'dotenv/config'
 import {FetchError} from "../error/FetchError.js";
 
 describe("Club Teams API Request", () => {

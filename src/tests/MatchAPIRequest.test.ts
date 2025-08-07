@@ -1,6 +1,5 @@
 import {MatchAPIRequest} from "../service/MatchAPIRequest.js";
 import {Gameday} from "../enum/Gameday.js";
-import 'dotenv/config'
 import {FetchError} from "../error/FetchError.js";
 
 describe("Match API Request", () => {

@@ -1,5 +1,4 @@
 import {LeagueGroupAPIRequest} from "../service/LeagueGroupAPIRequest.js";
-import 'dotenv/config'
 
 describe('LeagueGroupsAPIRequest', () => {
     const request = new LeagueGroupAPIRequest(process.env.TEST_API_KEY!)
