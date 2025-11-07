@@ -3,18 +3,72 @@ import {FetchError} from "../error/FetchError.js";
 import {LicenseFilter} from "../model/LicenseFilter.js";
 
 export abstract class AbstractAPIRequest {
-  protected readonly API_URL: string = "https://bsm.baseball-softball.de";
-
-  constructor(protected readonly apiKey: string) {
-  }
-
   public readonly SEASON_FILTER = "filters[seasons][]";
   public readonly GAMEDAY_FILTER = "filters[gamedays][]";
   public readonly LEAGUE_FILTER = "filters[leagues][]";
   public readonly ORGANIZATION_FILTER = "filters[organizations][]";
   public readonly TEAM_SEARCH = "search";
-
   public readonly defaultSeason = new Date().getFullYear();
+  protected API_URL: string = "https://bsm.baseball-softball.de";
+
+  constructor(protected readonly apiKey: string) {
+  }
+
+  /**
+   * Option to call the BSM API without automatic response parsing, in case callers want to do that themselves.
+   *
+   * @param resource the API endpoint
+   * @param queryParameters all GET parameters that should be appended to the URL
+   * @protected
+   */
+  public async apiCall(resource: string, queryParameters: string[][] | Record<string, string>) {
+    const url = this.buildRequestURL(resource, queryParameters);
+
+    return await fetch(url);
+  }
+
+  /**
+   * Helper method to build the API call URL from the given parameters and endpoint.
+   *
+   * @param resource the BSM API endpoint to call
+   * @param queryParameters all GET parameters that should be appended to the URL
+   */
+  public buildRequestURL(resource: string, queryParameters: string[][] | Record<string, string>): URL {
+    if (Array.isArray(queryParameters)) {
+      queryParameters.push(["api_key", this.apiKey]);
+    } else {
+      queryParameters.api_key = this.apiKey;
+    }
+
+    const params = new URLSearchParams(queryParameters).toString();
+    return new URL(`${this.API_URL}/${resource}?` + params);
+  }
+
+  /**
+   * @deprecated use objects as search params
+   *
+   * Helper method to convert more strictly typed filter objects into generic string array
+   * to use for URLSearchParams constructor.
+   *
+   * @param filter
+   */
+  public convertToSearchParams(filter: LicenseFilter): string[][] {
+    return Object.entries(filter).map(([key, value]) => [key, value]);
+  }
+
+  public getAPIURL(): string {
+    return this.API_URL;
+  }
+
+  /**
+   * Set the API URL for all API calls, in case the default is not suitable
+   * (BSM request proxying, Staging environments, etc.).
+   *
+   * @param url the new API URL
+   */
+  public setAPIURL(url: string) {
+    this.API_URL = url;
+  }
 
   /**
    * Generic API fetch method for all resources that combines the three parts of a BSM API call:
@@ -46,19 +100,6 @@ export abstract class AbstractAPIRequest {
   }
 
   /**
-   * Option to call the BSM API without automatic response parsing, in case callers want to do that themselves.
-   *
-   * @param resource the API endpoint
-   * @param queryParameters all GET parameters that should be appended to the URL
-   * @protected
-   */
-  public async apiCall(resource: string, queryParameters: string[][] | Record<string, string>) {
-    const url = this.buildRequestURL(resource, queryParameters);
-
-    return await fetch(url);
-  }
-
-  /**
    * Type-decorated wrapper method to parse a response object as JSON. Returns the generic input type as object on success,
    * and throws a custom error on failure.
    *
@@ -72,34 +113,5 @@ export abstract class AbstractAPIRequest {
     } catch (error: any) {
       throw new ParseError(`The Response could not be parsed to valid object of the requested type: ${error.message}`);
     }
-  }
-
-  /**
-   * Helper method to build the API call URL from the given parameters and endpoint.
-   *
-   * @param resource the BSM API endpoint to call
-   * @param queryParameters all GET parameters that should be appended to the URL
-   */
-  public buildRequestURL(resource: string, queryParameters: string[][] | Record<string, string>): URL {
-    if (Array.isArray(queryParameters)) {
-      queryParameters.push(["api_key", this.apiKey]);
-    } else {
-      queryParameters.api_key = this.apiKey;
-    }
-
-    const params = new URLSearchParams(queryParameters).toString();
-    return new URL(`${this.API_URL}/${resource}?` + params);
-  }
-
-  /**
-   * @deprecated use objects as search params
-   *
-   * Helper method to convert more strictly typed filter objects into generic string array
-   * to use for URLSearchParams constructor.
-   *
-   * @param filter
-   */
-  public convertToSearchParams(filter: LicenseFilter): string[][] {
-    return Object.entries(filter).map(([key, value]) => [key, value]);
   }
 }
